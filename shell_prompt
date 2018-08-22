@@ -1,0 +1,15 @@
+# use this function to show branch information of git
+function git_prompt() {
+	git rev-parse --git-dir &> /dev/null
+
+	if [ "$?" -eq 0 ]; then
+		git_branch=$(git status | head -n 1 | awk '{print $3}')
+		git_prompt=\("git:"$(echo $git_branch)\)
+		echo $git_prompt
+	fi
+}
+
+# use this function to display a short working directory
+function short_dir() {
+	echo $(pwd | sed -E -e "s|^$HOME|~|" -e 's|^([^/]*/[^/]*/).*(/[^/]*)|\1..\2|')
+}
